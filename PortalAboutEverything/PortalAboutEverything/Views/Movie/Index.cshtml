@@ -6,10 +6,11 @@
 }
 
 @section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
     <script src="/js/Movies/index.js"></script>
     <script src="/js/Movies/deleteMovie.js"></script>
     <script src="/js/Movies/movieNotifications.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+    <script src="/js/Movies/movieReview.js"></script>
 }
 
 <div class="movieStatisticsTable">
@@ -26,7 +27,6 @@
             <div class="movieTableCell">@movieInfo.Name</div>
             <div class="movieTableCell">@movieInfo.Director</div>
             <div class="movieTableCell">@movieInfo.CountOfUsersWhoFavorite</div>
-            <div class="movieTableCell">@movieInfo.CountOfMovieReview</div>
         </div>
         }
 </div>
@@ -63,7 +63,8 @@
     @foreach (var movie in Model.Movies)
     {
         <div class="movie">
-                <span class="movieName">@Movie_Index.Movie <a href="/Movie/UpdateMovie?id=@movie.Id">@movie.Name</a></span> 
+            <input class="movieId" type="hidden" value="@movie.Id" />
+            <span class="movieName">@Movie_Index.Movie <a href="/Movie/UpdateMovie?id=@movie.Id">@movie.Name</a></span> 
             @if (movie.HasCover)
             {
                 <img class="movieImage" src="/images/Movie/cover-@(movie.Id).jpg" />
@@ -90,14 +91,6 @@
                     <a href="/Movie/MovieAddReview?id=@movie.Id">@Movie_Index.LeaveReviewForMovie "@movie.Name"</a>
                 </div>
                 <div class="review-container">
-                    @foreach (var review in movie.Reviews)
-                    {
-                        <div class="review">
-                            <div class="deleteReview"><a href="/Movie/MovieDeleteReview?id=@review.Id" class="deleteReview" >Удалить</a></div>
-                            <div class="dateReview">@review.DateOfCreation</div>
-                            <div class="comment">@review.Comment. @Movie_Index.Rate @review.Rate</div>
-                        </div>
-                    }
                 </div>
             </div>
     }
